@@ -9,6 +9,9 @@ daily unit sales, weekly prices, and a calendar of events/SNAP days across 3
 states, 10 stores, and the full product hierarchy (30,490 item-store series in
 the real data).
 
+**▶ [Open the live dashboard](https://shavkatjony.github.io/retail-commercial-intelligence/dashboard/)** — the
+self-contained HTML edition, 3 pages, runs in any browser.
+
 ![Executive Control Tower preview](docs/img/executive_preview.png)
 
 > *Reference render from the pipeline's own outputs. The dashboard is built in
@@ -129,10 +132,11 @@ Three linked pages — **Executive Control Tower** → **Commercial Diagnostics*
 - Screenshots: `dashboard/screenshots/` _(add after publishing)_
 
 **Companion — self-contained HTML** ([dashboard/index.html](dashboard/index.html))
+- **Live:** [shavkatjony.github.io/retail-commercial-intelligence/dashboard/](https://shavkatjony.github.io/retail-commercial-intelligence/dashboard/)
+
 A single portable file (no dependencies, no server) with the same 3 pages, inline
-SVG charts, light/dark, and its data refreshed by the pipeline (`make html`). Open
-it directly, or host it on GitHub Pages for an instant live link. Editing guide:
-[dashboard/html_dashboard_guide.md](dashboard/html_dashboard_guide.md).
+SVG charts, light/dark, and its data refreshed by the pipeline (`make html`).
+Editing guide: [dashboard/html_dashboard_guide.md](dashboard/html_dashboard_guide.md).
 
 ## 11 · Technical architecture & analysis
 
