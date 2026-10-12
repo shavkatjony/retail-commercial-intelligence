@@ -1,0 +1,17 @@
+# ── Regenerable artifacts (rebuilt by `make all`) ───────────────────────────
+/data/raw/*
+/data/processed/*
+/dashboard/extracts/*
+!**/.gitkeep
+
+# Screenshots ARE committed (dashboard proof) — do not ignore dashboard/screenshots
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# ── Tableau / OS ────────────────────────────────────────────────────────────
+*.twb.bak
+.DS_Store

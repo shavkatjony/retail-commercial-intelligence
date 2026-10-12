@@ -1,0 +1,9 @@
+# Retail Commercial Intelligence & Decision System — Python dependencies
+# Install:  python -m pip install -r requirements.txt
+pandas>=2.0
+numpy>=1.24
+pyarrow>=12.0        # Parquet staging hand-off
+duckdb>=1.0          # embedded SQL / OLAP engine for the star schema
+pyyaml>=6.0          # config.yaml
+jupyter>=1.0         # notebooks
+matplotlib>=3.7      # notebook charts

@@ -1,0 +1,63 @@
+# ============================================================================
+# Retail Commercial Intelligence & Decision System — configuration
+# ----------------------------------------------------------------------------
+# Single source of truth for paths, the data-source switch, and every
+# analytical parameter. Nothing downstream hard-codes a number; if a threshold
+# is defended in an interview, it is defended from THIS file.
+# ============================================================================
+
+project:
+  name: "Retail Commercial Intelligence & Decision System"
+  currency: "USD"
+
+# ── Data source ─────────────────────────────────────────────────────────────
+# mode: "sample" -> generated M5-shaped data (dev scaffold; NOT for findings)
+#       "real"   -> real Kaggle M5 files placed in data/raw/ (a 1-line change)
+# The schema is identical in both modes, so switching changes NOTHING downstream.
+data_source:
+  mode: "sample"
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  files:                                  # M5 filenames (used in both modes)
+    sales: "sales_train_evaluation.csv"
+    prices: "sell_prices.csv"
+    calendar: "calendar.csv"
+
+# ── Synthetic sample parameters (only used when mode == "sample") ────────────
+# Deliberately scaled down so `make all` runs in seconds on a laptop. The
+# hierarchy mirrors real M5 exactly: 3 states, 10 stores, 3 categories, 7 depts.
+sample:
+  seed: 20260824
+  start_date: "2013-01-01"
+  n_days: 730                    # 2 years of daily history
+  items_per_department: 30       # series ≈ items_per_dept × n_depts × n_stores
+  stores:                        # state -> stores (10 stores, as in real M5)
+    CA: ["CA_1", "CA_2", "CA_3", "CA_4"]
+    TX: ["TX_1", "TX_2", "TX_3"]
+    WI: ["WI_1", "WI_2", "WI_3"]
+  departments:                   # category -> departments (7 depts, as in real M5)
+    FOODS: ["FOODS_1", "FOODS_2", "FOODS_3"]
+    HOUSEHOLD: ["HOUSEHOLD_1", "HOUSEHOLD_2"]
+    HOBBIES: ["HOBBIES_1", "HOBBIES_2"]
+
+# ── Analytical parameters ────────────────────────────────────────────────────
+analysis:
+  # Comparable-period growth: the most recent `period_days` vs the SAME calendar
+  # window one year earlier (like-for-like, controls for seasonality).
+  period_days: 90
+  # Exception-engine thresholds. Rationale lives in docs/metric_definitions.md.
+  thresholds:
+    demand_growth_high: 0.15       # units up ≥ +15%  -> growth signal
+    demand_decline: -0.10          # units down ≤ -10% -> deterioration signal
+    price_increase: 0.05           # ASP up  ≥ +5%     -> price-move signal
+    min_contribution_share: 0.005  # store×category segments below 0.5% of value are not flagged
+    min_prior_units: 50            # item-level volume floor (prior window) — keeps intermittent
+                                   #   noise out of item movers and the price-risk list
+    concentration_top_n: 10        # top-N contributors for concentration risk
+
+# ── Engine ──────────────────────────────────────────────────────────────────
+# DuckDB is capped so the full real-M5 build fits on an 8 GB laptop: past the cap
+# it spills to disk (data/processed/rci.duckdb.tmp) instead of failing. Measured
+# at full M5 scale (59M rows): 1.5GB cap → ~2.4 GB peak, and NO slower than 3GB.
+engine:
+  duckdb_memory_limit: "1500MB"
