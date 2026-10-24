@@ -137,7 +137,7 @@ Keep it a **triage list, not a chart gallery** — every element points to an ac
 ## 6 · Publish & capture
 
 1. **File → Save to Tableau Public** (needs a free Tableau Public account — this
-   is your sign-in step; Claude cannot do it for you).
+   is a manual sign-in step).
 2. Copy the published URL into the README's Dashboard section.
 3. Capture a PNG of each page into `dashboard/screenshots/`
    (`executive.png`, `diagnostics.png`, `opportunities.png`) — these replace the
